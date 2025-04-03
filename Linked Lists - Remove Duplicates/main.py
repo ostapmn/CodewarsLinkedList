@@ -6,23 +6,15 @@ class Node(object):
         self.data = data
         self.next = None
 
-# Time out error
-def remove_duplicates(head):
-    lst = []
-    if head is None:
+def remove_duplicates(head:Node):
+    if not head:
         return None
+    lst = {head.data}
     current = head
-    prev = None
     while current:
-        if current.data in lst:
-            if prev:
-                prev.next = current.next
-
-            else:
-                head = current.next
+        if current.next and current.next.data in lst:
+            current.next = current.next.next if current.next else None
         else:
-            lst.append(current.data)
-            prev = current
-
-        current = current.next
+            current = current.next
+            lst.add(current.data if current else None)
     return head
